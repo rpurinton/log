@@ -193,14 +193,17 @@ final class Log
     public static function write(string $level, string $message, array $context = []): void
     {
         if (self::getLevel() <= self::getLevel($level)) {
-            if (self::$isWebhook) return self::sendToWebhook($level, $message, $context);
+            if (self::$isWebhook) {
+                self::sendToWebhook($level, $message, $context);
+                return;
+            }
             $date      = date('Y-m-d H:i:s');
             $levelUp   = strtoupper($level);
             $formatted = "$date [$levelUp] $message";
             if (!empty($context)) $formatted .= ' ' . json_encode($context);
 
-            if (self::$useErrorLog) return error_log($formatted);
-            self::writeToFile($formatted . PHP_EOL);
+            if (self::$useErrorLog) error_log($formatted);
+            else self::writeToFile($formatted . PHP_EOL);
         }
     }
 
