@@ -354,10 +354,20 @@ final class Log
     public static function install(): void
     {
         self::init();
+        self::handleExceptions();
+        self::handleErrors();
+    }
+
+    public static function handleExceptions(): void
+    {
         set_exception_handler(function (\Throwable $e) {
             self::fatal($e->getMessage() . ' in ' . $e->getFile() . ' on line ' . $e->getLine());
             exit(1);
         });
+    }
+
+    public static function handleErrors(): void
+    {
         set_error_handler(function (int $errno, string $errstr, string $errfile, int $errline) {
             self::fatal($errstr . ' in ' . $errfile . ' on line ' . $errline);
             exit(1);
