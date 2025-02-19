@@ -69,6 +69,11 @@ final class Log
      */
     private static function loadConfiguration(): void
     {
+        self::$logLevel = null;
+        self::$logFile = null;
+        self::$useErrorLog = false;
+        self::$isWebhook = false;
+
         try {
             $config = Config::get('Log', ['level' => 'string']);
             $configLevel = $config['level'];
@@ -398,7 +403,7 @@ final class Log
     public static function handleExceptions(): void
     {
         set_exception_handler(function (\Throwable $e) {
-            self::fatal($e->getMessage() . ' in ' . $e->getFile() . ' on line ' . $e->getLine());
+            self::fatal($e->getMessage(), ['file' => $e->getFile(), 'line' => $e->getLine()]);
             exit(1);
         });
     }
@@ -406,8 +411,8 @@ final class Log
     public static function handleErrors(): void
     {
         set_error_handler(function (int $errno, string $errstr, string $errfile, int $errline) {
-            self::fatal($errstr . ' in ' . $errfile . ' on line ' . $errline);
-            exit(1);
+            self::warn($errstr, ['file' => $errfile, 'line' => $errline]);
+            return true;
         });
     }
 }
