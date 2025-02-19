@@ -157,6 +157,29 @@ final class Log
     }
 
     /**
+     * Returns a color based on the log level.
+     * Used for embeds in Discord webhooks.
+     * 
+     * @param string $level The log level.
+     * @return int The color value.
+     */
+    private static function getColor(string $level): int
+    {
+        return match (strtoupper($level)) {
+            'TRACE' => 0x9b59b6,
+            'DEBUG' => 0x3498db,
+            'INFO' => 0x2ecc71,
+            'NOTICE' => 0x1abc9c,
+            'WARN' => 0xf1c40f,
+            'ERROR' => 0xe74c3c,
+            'CRITICAL' => 0x8e44ad,
+            'ALERT' => 0xe67e22,
+            'EMERGENCY' => 0xc0392b,
+            default => 0x95a5a6,
+        };
+    }
+
+    /**
      * Write a log message if the current log level threshold allows it.
      *
      * Formats the message with a timestamp and level, then sends it either to PHP's error_log,
@@ -170,14 +193,14 @@ final class Log
     public static function write(string $level, string $message, array $context = []): void
     {
         if (self::getLevel() <= self::getLevel($level)) {
+            if (self::$isWebhook) return self::sendToWebhook($level, $message, $context);
             $date      = date('Y-m-d H:i:s');
             $levelUp   = strtoupper($level);
             $formatted = "$date [$levelUp] $message";
             if (!empty($context)) $formatted .= ' ' . json_encode($context);
 
-            if (self::$useErrorLog) error_log($formatted);
-            elseif (self::$isWebhook) self::sendToWebhook($formatted);
-            else self::writeToFile($formatted . PHP_EOL);
+            if (self::$useErrorLog) return error_log($formatted);
+            self::writeToFile($formatted . PHP_EOL);
         }
     }
 
@@ -188,23 +211,34 @@ final class Log
      * @return void
      * @throws LogException if the webhook request fails.
      */
-    private static function sendToWebhook(string $payload): void
+    private static function sendToWebhook(string $level, string $message, array $context): void
     {
-        // max 2000 characters
-        $payload = substr($payload, 0, 1981);
+        $embed = [
+            'title'       => "<t:" . time() . ":R> $level",
+            'description' => $message,
+            'color'       => self::getColor($level),
+            'timestamp'   => date('c'),
+            'footer'      => ['text' => 'RPurinton\Log'],
+            'fields'      => [],
+        ];
+        if (!empty($context)) {
+            foreach ($context as $key => $value) {
+                $embed['fields'][] = ['name' => $key, 'value' => $value, 'inline' => true];
+            }
+        }
+        $payload = ['embeds' => [$embed]];
         try {
-            $jsonPayload = json_encode(['content' => '<t:' . time() . ':R> ' . $payload]);
             $result = HTTPS::request([
                 'url'     => self::$logFile,
                 'method'  => 'POST',
                 'headers' => ['Content-Type: application/json'],
-                'body'    => $jsonPayload
+                'body'    => json_encode($payload),
             ]);
             if ($result !== '') {
                 throw new LogException('Failed to send log to the webhook: ' . $result);
             }
         } catch (\Throwable $e) {
-            throw new LogException('Failed to send log to the webhook: ' . $e->getMessage());
+            error_log('Error sending log to webhook: ' . $e->getMessage());
         }
     }
 
@@ -223,7 +257,7 @@ final class Log
                 throw new \RuntimeException('Failed to write to log file.');
             }
         } catch (\Throwable $e) {
-            throw new LogException('Error writing to log file: ' . $e->getMessage());
+            error_log('Error writing to log file: ' . $e->getMessage());
         }
     }
 
