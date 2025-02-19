@@ -347,7 +347,22 @@ final class Log
     {
         self::write('FATAL', $message, $context);
     }
-}
 
-// Run init() right away upon including this file.
-Log::init();
+    /**
+     *  Initializes and installs the exception and error handlers.
+     * 
+     * @return void
+     */
+    public static function install(): void
+    {
+        self::init();
+        set_exception_handler(function (\Throwable $e) {
+            self::fatal($e->getMessage() . ' in ' . $e->getFile() . ' on line ' . $e->getLine());
+            exit(1);
+        });
+        set_error_handler(function (int $errno, string $errstr, string $errfile, int $errline) {
+            self::fatal($errstr . ' in ' . $errfile . ' on line ' . $errline);
+            exit(1);
+        });
+    }
+}
