@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "684032bd1496e634eefe6e755421206a",
+    "content-hash": "062f30bdbe53ef0908810375530e09fd",
     "packages": [
         {
             "name": "rpurinton/config",
-            "version": "1.0.6",
+            "version": "1.0.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/rpurinton/config.git",
-                "reference": "d400ea02d44ca75009550e32b843d0ac4a4c77e6"
+                "reference": "08a19dd426daca83b1fd9ef2401debf4c142243b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rpurinton/config/zipball/d400ea02d44ca75009550e32b843d0ac4a4c77e6",
-                "reference": "d400ea02d44ca75009550e32b843d0ac4a4c77e6",
+                "url": "https://api.github.com/repos/rpurinton/config/zipball/08a19dd426daca83b1fd9ef2401debf4c142243b",
+                "reference": "08a19dd426daca83b1fd9ef2401debf4c142243b",
                 "shasum": ""
             },
             "require": {
@@ -43,9 +43,9 @@
             "description": "A basic configuration loading utility.",
             "support": {
                 "issues": "https://github.com/rpurinton/config/issues",
-                "source": "https://github.com/rpurinton/config/tree/1.0.6"
+                "source": "https://github.com/rpurinton/config/tree/1.0.7"
             },
-            "time": "2025-02-18T20:10:19+00:00"
+            "time": "2025-02-18T20:57:15+00:00"
         },
         {
             "name": "rpurinton/https",
@@ -92,12 +92,12 @@
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {},
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
         "php": "^8.0"
     },
-    "platform-dev": [],
+    "platform-dev": {},
     "plugin-api-version": "2.6.0"
 }
