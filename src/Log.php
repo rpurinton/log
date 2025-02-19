@@ -135,9 +135,7 @@ final class Log
     public static function getLevel(string $level = null): int
     {
         // Assume init() has been called.
-        if ($level === null) {
-            $level = self::$logLevel;
-        }
+        if ($level === null) $level = self::$logLevel ?? 'OFF';
         $level = strtoupper($level);
         $levels = [
             'TRACE'     => 0,
