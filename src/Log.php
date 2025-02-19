@@ -166,22 +166,20 @@ final class Log
      *
      * @param string $level   The log level of the message.
      * @param string $message The log message.
+     * @param array $context  Additional context data (optional).
      * @return void
      */
-    public static function write(string $level, string $message): void
+    public static function write(string $level, string $message, array $context = []): void
     {
         if (self::getLevel() <= self::getLevel($level)) {
             $date      = date('Y-m-d H:i:s');
             $levelUp   = strtoupper($level);
-            $formatted = "$date [$levelUp] $message\n";
+            $formatted = "$date [$levelUp] $message";
+            if (!empty($context)) $formatted .= ' ' . json_encode($context);
 
-            if (self::$useErrorLog) {
-                error_log($formatted);
-            } elseif (self::$isWebhook) {
-                self::sendToWebhook($formatted);
-            } else {
-                self::writeToFile($formatted);
-            }
+            if (self::$useErrorLog) error_log($formatted);
+            elseif (self::$isWebhook) self::sendToWebhook($formatted);
+            else self::writeToFile($formatted . PHP_EOL);
         }
     }
 
@@ -194,6 +192,8 @@ final class Log
      */
     private static function sendToWebhook(string $payload): void
     {
+        // max 2000 characters
+        $payload = substr($payload, 0, 1981);
         try {
             $jsonPayload = json_encode(['content' => '<t:' . time() . ':R> ' . $payload]);
             $result = HTTPS::request([
