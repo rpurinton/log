@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fa9ad60ba24de3f2a13e20147f48d9c2",
+    "content-hash": "050d78a3c9f86e146c2d20da95c3905c",
     "packages": [
         {
             "name": "rpurinton/config",
-            "version": "1.0.15",
+            "version": "1.0.20",
             "source": {
                 "type": "git",
                 "url": "https://github.com/rpurinton/config.git",
-                "reference": "163ba765589799486a9d5bee50eccb768b40371c"
+                "reference": "5ef3778e098478b9e2851b12d8bbc0d888923bb6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rpurinton/config/zipball/163ba765589799486a9d5bee50eccb768b40371c",
-                "reference": "163ba765589799486a9d5bee50eccb768b40371c",
+                "url": "https://api.github.com/repos/rpurinton/config/zipball/5ef3778e098478b9e2851b12d8bbc0d888923bb6",
+                "reference": "5ef3778e098478b9e2851b12d8bbc0d888923bb6",
                 "shasum": ""
             },
             "require": {
@@ -43,22 +43,22 @@
             "description": "A basic configuration loading utility.",
             "support": {
                 "issues": "https://github.com/rpurinton/config/issues",
-                "source": "https://github.com/rpurinton/config/tree/1.0.15"
+                "source": "https://github.com/rpurinton/config/tree/1.0.20"
             },
-            "time": "2025-02-20T22:42:26+00:00"
+            "time": "2025-02-21T17:46:09+00:00"
         },
         {
             "name": "rpurinton/https",
-            "version": "1.0.12",
+            "version": "1.0.14",
             "source": {
                 "type": "git",
                 "url": "https://github.com/rpurinton/https.git",
-                "reference": "11eb4caa546f0c37da41b9f0b1ba17a8fa25f9dc"
+                "reference": "8fd9ddfe66b4ad719322b671c8dd1ad89435b805"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rpurinton/https/zipball/11eb4caa546f0c37da41b9f0b1ba17a8fa25f9dc",
-                "reference": "11eb4caa546f0c37da41b9f0b1ba17a8fa25f9dc",
+                "url": "https://api.github.com/repos/rpurinton/https/zipball/8fd9ddfe66b4ad719322b671c8dd1ad89435b805",
+                "reference": "8fd9ddfe66b4ad719322b671c8dd1ad89435b805",
                 "shasum": ""
             },
             "require": {
@@ -84,9 +84,9 @@
             "description": "Abstract Static Class for making HTTPS Requests in PHP/Composer",
             "support": {
                 "issues": "https://github.com/rpurinton/https/issues",
-                "source": "https://github.com/rpurinton/https/tree/1.0.12"
+                "source": "https://github.com/rpurinton/https/tree/1.0.14"
             },
-            "time": "2025-02-20T22:42:19+00:00"
+            "time": "2025-02-21T17:47:38+00:00"
         }
     ],
     "packages-dev": [],
