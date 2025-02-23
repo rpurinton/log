@@ -11,14 +11,14 @@
     ],
     "require": {
         "php": "^8.0",
-        "rpurinton/https": "^1.0",
-        "rpurinton/config": "^1.0"
+        "rpurinton/config": "^1.0",
+        "rpurinton/webhook": "^1.0"
     },
     "autoload": {
         "psr-4": {
             "RPurinton\\": "src/"
         }
     },
-    "version": "1.0.19",
+    "version": "1.0.20",
     "minimum-stability": "stable"
 }

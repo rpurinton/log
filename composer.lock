@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "316079302b7397f3f45dcec84eebe379",
+    "content-hash": "c6d40e4ea07cecb8fd62af28f7e37a5d",
     "packages": [
         {
             "name": "rpurinton/config",
@@ -87,6 +87,47 @@
                 "source": "https://github.com/rpurinton/https/tree/1.0.15"
             },
             "time": "2025-02-21T18:01:19+00:00"
+        },
+        {
+            "name": "rpurinton/webhook",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/rpurinton/webhook.git",
+                "reference": "e40a17c67e0c1c02b642fc51730fc5ad6dae6eec"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/rpurinton/webhook/zipball/e40a17c67e0c1c02b642fc51730fc5ad6dae6eec",
+                "reference": "e40a17c67e0c1c02b642fc51730fc5ad6dae6eec",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^8.0",
+                "rpurinton/https": "^1.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "RPurinton\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Russell Purinton",
+                    "email": "russell.purinton@gmail.com"
+                }
+            ],
+            "description": "A PHP Library for posting to webhooks.",
+            "support": {
+                "issues": "https://github.com/rpurinton/webhook/issues",
+                "source": "https://github.com/rpurinton/webhook/tree/1.0.1"
+            },
+            "time": "2025-02-23T15:47:53+00:00"
         }
     ],
     "packages-dev": [],

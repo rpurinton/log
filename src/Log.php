@@ -236,12 +236,7 @@ final class Log
         }
         $payload = ['embeds' => [$embed]];
         try {
-            $result = HTTPS::request([
-                'url'     => self::$logFile,
-                'method'  => 'POST',
-                'headers' => ['Content-Type: application/json'],
-                'body'    => json_encode($payload),
-            ]);
+            $result = Webhook::post(self::$logFile, $payload);
             if ($result !== '') {
                 throw new LogException('Failed to send log to the webhook: ' . $result);
             }
