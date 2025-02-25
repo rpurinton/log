@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a6bed5703398e54291cd66d0b5952f9f",
+    "content-hash": "9b7a5a80fb868f381f5e52df21fbe808",
     "packages": [
         {
             "name": "rpurinton/config",
@@ -49,16 +49,16 @@
         },
         {
             "name": "rpurinton/https",
-            "version": "1.0.15",
+            "version": "1.0.16",
             "source": {
                 "type": "git",
                 "url": "https://github.com/rpurinton/https.git",
-                "reference": "af12538c8e508c830746eb3da2d790348f9e00bd"
+                "reference": "2254df5546d3be8ba87ceb36f373f06db4d8066f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rpurinton/https/zipball/af12538c8e508c830746eb3da2d790348f9e00bd",
-                "reference": "af12538c8e508c830746eb3da2d790348f9e00bd",
+                "url": "https://api.github.com/repos/rpurinton/https/zipball/2254df5546d3be8ba87ceb36f373f06db4d8066f",
+                "reference": "2254df5546d3be8ba87ceb36f373f06db4d8066f",
                 "shasum": ""
             },
             "require": {
@@ -84,22 +84,22 @@
             "description": "Abstract Static Class for making HTTPS Requests in PHP/Composer",
             "support": {
                 "issues": "https://github.com/rpurinton/https/issues",
-                "source": "https://github.com/rpurinton/https/tree/1.0.15"
+                "source": "https://github.com/rpurinton/https/tree/1.0.16"
             },
-            "time": "2025-02-21T18:01:19+00:00"
+            "time": "2025-02-23T15:58:49+00:00"
         },
         {
             "name": "rpurinton/webhook",
-            "version": "1.0.2",
+            "version": "1.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/rpurinton/webhook.git",
-                "reference": "46e3bfa1daa114bf49aeabb2006565cf2ada69b4"
+                "reference": "8f2d8c945b96bcb30fda2ac36ca5890920c8f2ae"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rpurinton/webhook/zipball/46e3bfa1daa114bf49aeabb2006565cf2ada69b4",
-                "reference": "46e3bfa1daa114bf49aeabb2006565cf2ada69b4",
+                "url": "https://api.github.com/repos/rpurinton/webhook/zipball/8f2d8c945b96bcb30fda2ac36ca5890920c8f2ae",
+                "reference": "8f2d8c945b96bcb30fda2ac36ca5890920c8f2ae",
                 "shasum": ""
             },
             "require": {
@@ -125,9 +125,9 @@
             "description": "A PHP Library for posting to webhooks.",
             "support": {
                 "issues": "https://github.com/rpurinton/webhook/issues",
-                "source": "https://github.com/rpurinton/webhook/tree/1.0.2"
+                "source": "https://github.com/rpurinton/webhook/tree/1.0.4"
             },
-            "time": "2025-02-23T15:55:53+00:00"
+            "time": "2025-02-24T18:37:14+00:00"
         }
     ],
     "packages-dev": [],
