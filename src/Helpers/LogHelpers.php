@@ -8,27 +8,26 @@ class LogHelpers
 {
     /**
      * Get numeric log level based on its string representation.
-     *
      * @param string|null $level The log level string (optional).
      * @return int Corresponding numeric log level.
      * @throws LogException if an invalid log level is provided.
      */
     public static function getLevel(string $level = null): int
     {
-        $level = strtoupper($level);
         $levels = [
-            'TRACE'     => 0,
-            'DEBUG'     => 1,
-            'INFO'      => 2,
-            'NOTICE'    => 3,
-            'WARN'      => 4,
-            'ERROR'     => 5,
-            'CRITICAL'  => 6,
-            'ALERT'     => 7,
+            'TRACE' => 0,
+            'DEBUG' => 1,
+            'INFO' => 2,
+            'NOTICE' => 3,
+            'WARN' => 4,
+            'ERROR' => 5,
+            'CRITICAL' => 6,
+            'ALERT' => 7,
             'EMERGENCY' => 8,
-            'FATAL'     => 9,
-            'OFF'       => 10,
+            'FATAL' => 9,
+            'OFF' => 10,
         ];
+        $level = strtoupper($level);
         if (!array_key_exists($level, $levels)) {
             throw new LogException('Invalid log level: ' . $level);
         }
@@ -38,7 +37,6 @@ class LogHelpers
     /**
      * Returns a color based on the log level.
      * Used for embeds in Discord webhooks.
-     * 
      * @param string $level The log level.
      * @return int The color value.
      */

@@ -4,24 +4,17 @@ namespace RPurinton\Validators;
 
 class LogValidators
 {
-    public static function validateLevel(string $level)
+    public static function validateLevel(string $level): void
     {
-        if (!in_array(strtoupper($level), ['TRACE', 'DEBUG', 'INFO', 'NOTICE', 'WARN', 'ERROR', 'CRITICAL', 'ALERT', 'EMERGENCY', 'FATAL', 'OFF'])) {
+        $validLevels = ['TRACE', 'DEBUG', 'INFO', 'NOTICE', 'WARN', 'ERROR', 'CRITICAL', 'ALERT', 'EMERGENCY', 'FATAL', 'OFF'];
+        if (!in_array(strtoupper($level), $validLevels)) {
             throw new \InvalidArgumentException('Invalid log level');
         }
     }
 
     public static function validateLogFile(?string $logFile): void
     {
-        if ($logFile === null) {
-            return;
-        }
-
-        if (stripos($logFile, 'http') === 0) {
-            return;
-        }
-
-        if ($logFile === 'php://stdout') {
+        if ($logFile === null || stripos($logFile, 'http') === 0 || $logFile === 'php://stdout') {
             return;
         }
 
