@@ -3,6 +3,8 @@
 namespace RPurinton\Helpers;
 
 use RPurinton\Exceptions\LogException;
+use RPurinton\Log;
+use RPurinton\Validators\LogValidators;
 
 class LogHelpers
 {
@@ -12,8 +14,9 @@ class LogHelpers
      * @return int Corresponding numeric log level.
      * @throws LogException if an invalid log level is provided.
      */
-    public static function getLevel(string $level = null): int
+    public static function getLevel(?string $level = null): int
     {
+        if (empty($level)) return 10;
         $levels = [
             'TRACE' => 0,
             'DEBUG' => 1,
@@ -27,11 +30,8 @@ class LogHelpers
             'FATAL' => 9,
             'OFF' => 10,
         ];
-        $level = strtoupper($level);
-        if (!array_key_exists($level, $levels)) {
-            throw new LogException('Invalid log level: ' . $level);
-        }
-        return $levels[$level];
+        LogValidators::validateLevel($level);
+        return $levels[strtoupper($level)];
     }
 
     /**
