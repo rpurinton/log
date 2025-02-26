@@ -83,10 +83,13 @@ final class Log
         if (self::$logFile === null) {
             self::$logFile = getenv('LOG_FILE') ?: null;
         }
-        self::$useErrorLog = empty(self::$logFile);
-        self::$isWebhook = stripos(self::$logFile, 'http') === 0;
-        if (!self::$isWebhook && !self::$useErrorLog) {
-            LogValidators::validateLogFile(self::$logFile);
+        if (empty(self::$logFile)) {
+            self::$useErrorLog = true;
+        } else {
+            self::$isWebhook = stripos(self::$logFile, 'http') === 0;
+            if (!self::$isWebhook) {
+                LogValidators::validateLogFile(self::$logFile);
+            }
         }
     }
 
