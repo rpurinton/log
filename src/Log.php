@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace RPurinton;
 
-use RPurinton\Exceptions\LogException;
-use RPurinton\Validators\LogValidators;
+use RPurinton\{Config, Webhook};
 use RPurinton\Helpers\LogHelpers;
+use RPurinton\Validators\LogValidators;
+use RPurinton\Exceptions\LogException;
 
 /**
  * Class Log
@@ -26,11 +27,10 @@ final class Log
     public static function init(): void
     {
         self::loadConfiguration();
-        self::validate();
     }
 
     /**
-     * Install exception and error handlers.
+     * Initialize and install the exception and error handlers.
      */
     public static function install(): void
     {
@@ -39,7 +39,10 @@ final class Log
         self::handleErrors();
     }
 
-    private static function handleExceptions(): void
+    /**
+     * Handle uncaught exceptions and log them.
+     */
+    public static function handleExceptions(): void
     {
         set_exception_handler(function (\Throwable $e) {
             self::fatal($e->getMessage(), ['file' => $e->getFile(), 'line' => $e->getLine()]);
@@ -47,7 +50,10 @@ final class Log
         });
     }
 
-    private static function handleErrors(): void
+    /**
+     * Handle PHP errors and log them.
+     */
+    public static function handleErrors(): void
     {
         set_error_handler(function (int $errno, string $errstr, string $errfile, int $errline) {
             self::warn($errstr, ['errno' => $errno, 'file' => $errfile, 'line' => $errline]);
@@ -55,9 +61,6 @@ final class Log
         });
     }
 
-    /**
-     * Load configuration from the Config library or environment variables.
-     */
     private static function loadConfiguration(): void
     {
         self::$logLevel = null;
@@ -79,30 +82,70 @@ final class Log
         }
         if (self::$logFile === null) {
             self::$logFile = getenv('LOG_FILE') ?: null;
-            self::$useErrorLog = empty(self::$logFile);
+        }
+        self::$useErrorLog = empty(self::$logFile);
+        self::$isWebhook = stripos(self::$logFile, 'http') === 0;
+        if (!self::$isWebhook && !self::$useErrorLog) {
+            LogValidators::validateLogFile(self::$logFile);
         }
     }
 
-    /**
-     * Validate the loaded log configuration.
-     * @throws LogException if the log file directory does not exist or is not writable.
-     */
-    private static function validate(): void
+    public static function trace(string $message, array $context = []): void
     {
-        if (self::$logFile === null) {
-            self::$useErrorLog = true;
-        } else {
-            try {
-                LogValidators::validateLogFile(self::$logFile);
-                self::$isWebhook = stripos(self::$logFile, 'http') === 0;
-            } catch (\InvalidArgumentException $e) {
-                throw new LogException($e->getMessage());
-            }
-        }
+        self::write('TRACE', $message, $context);
     }
+
+    public static function debug(string $message, array $context = []): void
+    {
+        self::write('DEBUG', $message, $context);
+    }
+
+    public static function info(string $message, array $context = []): void
+    {
+        self::write('INFO', $message, $context);
+    }
+
+    public static function notice(string $message, array $context = []): void
+    {
+        self::write('NOTICE', $message, $context);
+    }
+
+    public static function warn(string $message, array $context = []): void
+    {
+        self::write('WARN', $message, $context);
+    }
+
+    public static function error(string $message, array $context = []): void
+    {
+        self::write('ERROR', $message, $context);
+    }
+
+    public static function critical(string $message, array $context = []): void
+    {
+        self::write('CRITICAL', $message, $context);
+    }
+
+    public static function alert(string $message, array $context = []): void
+    {
+        self::write('ALERT', $message, $context);
+    }
+
+    public static function emergency(string $message, array $context = []): void
+    {
+        self::write('EMERGENCY', $message, $context);
+    }
+
+    public static function fatal(string $message, array $context = []): void
+    {
+        self::write('FATAL', $message, $context);
+    }
+
 
     /**
      * Write a log message if the current log level threshold allows it.
+     * @param string $level The log level.
+     * @param string $message The log message.
+     * @param array $context The log context.
      */
     private static function write(string $level, string $message, array $context = []): void
     {
@@ -117,7 +160,30 @@ final class Log
     }
 
     /**
+     * Writes the log content to the log file.
+     * @param string $content The log content to write.
+     * @throws LogException if writing to the file fails.
+     */
+    private static function writeToFile(string $content): void
+    {
+        try {
+            if (self::$logFile === 'php://stdout') {
+                echo $content;
+            } else {
+                if (file_put_contents(self::$logFile, $content, FILE_APPEND | LOCK_EX) === false) {
+                    throw new \RuntimeException('Failed to write to log file.');
+                }
+            }
+        } catch (\Throwable $e) {
+            error_log('Error writing to log file: ' . $e->getMessage());
+        }
+    }
+
+    /**
      * Sends the log payload to the configured webhook URL.
+     * @param string $level The log level.
+     * @param string $message The log message.
+     * @param array $context The log context.
      * @throws LogException if the webhook request fails.
      */
     private static function sendToWebhook(string $level, string $message, array $context): void
@@ -139,65 +205,5 @@ final class Log
         } catch (\Throwable $e) {
             error_log('Error sending log to webhook: ' . $e->getMessage());
         }
-    }
-
-    /**
-     * Writes the log content to the log file.
-     * @throws LogException if writing to the file fails.
-     */
-    private static function writeToFile(string $content): void
-    {
-        try {
-            if (self::$logFile === 'php://stdout') {
-                echo $content;
-            } else {
-                if (file_put_contents(self::$logFile, $content, FILE_APPEND | LOCK_EX) === false) {
-                    throw new \RuntimeException('Failed to write to log file.');
-                }
-            }
-        } catch (\Throwable $e) {
-            error_log('Error writing to log file: ' . $e->getMessage());
-        }
-    }
-
-    public static function trace(string $message, array $context = []): void
-    {
-        self::write('TRACE', $message, $context);
-    }
-    public static function debug(string $message, array $context = []): void
-    {
-        self::write('DEBUG', $message, $context);
-    }
-    public static function info(string $message, array $context = []): void
-    {
-        self::write('INFO', $message, $context);
-    }
-    public static function notice(string $message, array $context = []): void
-    {
-        self::write('NOTICE', $message, $context);
-    }
-    public static function warn(string $message, array $context = []): void
-    {
-        self::write('WARN', $message, $context);
-    }
-    public static function error(string $message, array $context = []): void
-    {
-        self::write('ERROR', $message, $context);
-    }
-    public static function critical(string $message, array $context = []): void
-    {
-        self::write('CRITICAL', $message, $context);
-    }
-    public static function alert(string $message, array $context = []): void
-    {
-        self::write('ALERT', $message, $context);
-    }
-    public static function emergency(string $message, array $context = []): void
-    {
-        self::write('EMERGENCY', $message, $context);
-    }
-    public static function fatal(string $message, array $context = []): void
-    {
-        self::write('FATAL', $message, $context);
     }
 }
