@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "adee729007f722300ff9e3f2b7ce7a7a",
+    "content-hash": "e5c6c75821074dc1c7af66816ed4f2d2",
     "packages": [
         {
             "name": "rpurinton/config",
@@ -90,16 +90,16 @@
         },
         {
             "name": "rpurinton/webhook",
-            "version": "1.0.5",
+            "version": "1.0.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/rpurinton/webhook.git",
-                "reference": "7af5ba340ec61c68bc4be31afca0fb041ec5c11f"
+                "reference": "36924c39140686f7eefbe84bf837330f99a964e1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rpurinton/webhook/zipball/7af5ba340ec61c68bc4be31afca0fb041ec5c11f",
-                "reference": "7af5ba340ec61c68bc4be31afca0fb041ec5c11f",
+                "url": "https://api.github.com/repos/rpurinton/webhook/zipball/36924c39140686f7eefbe84bf837330f99a964e1",
+                "reference": "36924c39140686f7eefbe84bf837330f99a964e1",
                 "shasum": ""
             },
             "require": {
@@ -125,9 +125,9 @@
             "description": "A PHP Library for posting to webhooks.",
             "support": {
                 "issues": "https://github.com/rpurinton/webhook/issues",
-                "source": "https://github.com/rpurinton/webhook/tree/1.0.5"
+                "source": "https://github.com/rpurinton/webhook/tree/1.0.6"
             },
-            "time": "2025-02-25T22:44:52+00:00"
+            "time": "2025-03-02T00:08:52+00:00"
         }
     ],
     "packages-dev": [],
