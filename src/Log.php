@@ -70,9 +70,17 @@ final class Log
 
         try {
             $config = Config::get('Log', ['level' => LogValidators::validateLevel(...)]);
+
             self::$logLevel = $config['level'] ?? 'OFF';
             self::$logFile = $config['file'] ?? null;
-            self::$useErrorLog = empty(self::$logFile);
+
+            if (self::$logFile === 'error_log()') {
+                self::$useErrorLog = true;
+            }
+
+            if (empty(self::$logFile)) {
+                self::$useErrorLog = true;
+            }
         } catch (\Throwable $e) {
             // Fallback to env vars
         }
@@ -82,6 +90,9 @@ final class Log
         }
         if (self::$logFile === null) {
             self::$logFile = getenv('LOG_FILE') ?: null;
+        }
+        if (self::$logFile === 'error_log()') {
+            self::$useErrorLog = true;
         }
         if (empty(self::$logFile)) {
             self::$useErrorLog = true;
