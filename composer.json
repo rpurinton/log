@@ -12,13 +12,13 @@
     "require": {
         "php": "^8.0",
         "rpurinton/config": "^1.0.24",
-        "rpurinton/webhook": "^1.0.7"
+        "rpurinton/webhook": "^1.0.8"
     },
     "autoload": {
         "psr-4": {
             "RPurinton\\": "src/"
         }
     },
-    "version": "1.0.29",
+    "version": "1.0.30",
     "minimum-stability": "stable"
 }
