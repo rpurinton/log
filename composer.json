@@ -11,7 +11,7 @@
     ],
     "require": {
         "php": "^8.0",
-        "rpurinton/config": "^1.0.24",
+        "rpurinton/config": "^1.0.25",
         "rpurinton/webhook": "^1.0.8"
     },
     "autoload": {
@@ -19,6 +19,6 @@
             "RPurinton\\": "src/"
         }
     },
-    "version": "1.0.30",
+    "version": "1.0.31",
     "minimum-stability": "stable"
 }
