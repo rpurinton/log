@@ -168,8 +168,9 @@ final class Log
                 self::sendToWebhook($level, $message, $context);
                 return;
             }
-            $formatted = sprintf("%s [%s] %s %s", date('Y-m-d H:i:s'), strtoupper($level), $message, json_encode($context));
-            self::$useErrorLog ? error_log($formatted) : self::writeToFile($formatted . PHP_EOL);
+            $logFormatted = sprintf("[%s] %s %s", strtoupper($level), $message, $context ? json_encode($context) : '');
+            $fileFormatted = sprintf("%s [%s] %s %s", date('Y-m-d H:i:s'), strtoupper($level), $message, $context ? json_encode($context) : '');
+            self::$useErrorLog ? error_log($logFormatted) : self::writeToFile($fileFormatted . PHP_EOL);
         }
     }
 
