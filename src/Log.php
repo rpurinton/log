@@ -73,13 +73,12 @@ final class Log
 
             self::$logLevel = $config['level'] ?? 'OFF';
             self::$logFile = $config['file'] ?? null;
-
-            if (self::$logFile === 'error_log()') {
+            self::$isWebhook = stripos(self::$logFile, 'http') === 0;
+            if (self::$logFile === 'error_log()' || empty(self::$logFile)) {
                 self::$useErrorLog = true;
             }
-
-            if (empty(self::$logFile)) {
-                self::$useErrorLog = true;
+            if (!self::$isWebhook && !self::$useErrorLog) {
+               LogValidators::validateLogFile(self::$logFile);
             }
         } catch (\Throwable $e) {
             // Fallback to env vars
@@ -91,16 +90,12 @@ final class Log
         if (self::$logFile === null) {
             self::$logFile = getenv('LOG_FILE') ?: null;
         }
-        if (self::$logFile === 'error_log()') {
+        if (self::$logFile === 'error_log()' || empty(self::$logFile)) {
             self::$useErrorLog = true;
         }
-        if (empty(self::$logFile)) {
-            self::$useErrorLog = true;
-        } else {
-            self::$isWebhook = stripos(self::$logFile, 'http') === 0;
-            if (!self::$isWebhook) {
-                LogValidators::validateLogFile(self::$logFile);
-            }
+        self::$isWebhook = stripos(self::$logFile, 'http') === 0;
+        if (!self::$isWebhook && !self::$useErrorLog) {
+           LogValidators::validateLogFile(self::$logFile);
         }
     }
 
