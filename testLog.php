@@ -16,6 +16,11 @@ function testLogging()
     Log::init();
     Log::error('This is an error message', ['foo' => 'bar']);
 
+    echo "Testing with error_log()...\n";
+    putenv("LOG_FILE=error_log()");
+    Log::init();
+    Log::error('This is an error_log');
+
     echo "Testing Error Handling...\n";
     Log::install();
     $foo = 1 / 0;
