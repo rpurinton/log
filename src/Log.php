@@ -209,7 +209,7 @@ final class Log
         $payload = ['embeds' => [$embed]];
         try {
             $result = Webhook::post(self::$logFile, $payload);
-            if ($result !== '') {
+            if ($result !== '1') {
                 throw new LogException('Failed to send log to the webhook: ' . $result);
             }
         } catch (\Throwable $e) {
