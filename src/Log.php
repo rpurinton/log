@@ -78,7 +78,7 @@ final class Log
                 self::$useErrorLog = true;
             }
             if (!self::$isWebhook && !self::$useErrorLog) {
-               LogValidators::validateLogFile(self::$logFile);
+                LogValidators::validateLogFile(self::$logFile);
             }
         } catch (\Throwable $e) {
             // Fallback to env vars
@@ -95,7 +95,7 @@ final class Log
         }
         self::$isWebhook = stripos(self::$logFile, 'http') === 0;
         if (!self::$isWebhook && !self::$useErrorLog) {
-           LogValidators::validateLogFile(self::$logFile);
+            LogValidators::validateLogFile(self::$logFile);
         }
     }
 
@@ -208,8 +208,8 @@ final class Log
         ];
         $payload = ['embeds' => [$embed]];
         try {
-            $result = Webhook::post(self::$logFile, $payload);
-            if ($result !== 1) {
+            $result = (string)Webhook::post(self::$logFile, $payload);
+            if ($result !== '1') {
                 throw new LogException('Failed to send log to the webhook: ' . $result);
             }
         } catch (\Throwable $e) {
