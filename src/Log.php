@@ -15,7 +15,7 @@ use RPurinton\Exceptions\LogException;
  */
 final class Log
 {
-    private static ?string $logLevel = null;
+    public static ?string $logLevel = null;
     private static ?string $logFile = null;
     private static bool $isWebhook = false;
     private static bool $useErrorLog = false;
