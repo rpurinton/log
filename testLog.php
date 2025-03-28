@@ -7,7 +7,7 @@ use RPurinton\Log;
 
 function testLogging()
 {
-    echo "Testing with webhook...\n";
+    echo "Testing with webhook via env LOG_FILE...\n";
     Log::init();
     Log::error('This is an error message', ['foo' => 'bar']);
 
